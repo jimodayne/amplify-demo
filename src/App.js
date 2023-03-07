@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import { Amplify } from 'aws-amplify';
+import awsExports from './aws-exports';
+import { AmplifyProvider } from '@aws-amplify/ui-react';
+import { studioTheme } from './ui-components';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import '@aws-amplify/ui-react/styles.css';
 import './App.css';
+import Home from './Home';
+import Form from './Form';
+
+Amplify.configure(awsExports);
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/form',
+    element: <Form />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AmplifyProvider theme={studioTheme}>
+      <RouterProvider router={router} />
+    </AmplifyProvider>
   );
 }
 
